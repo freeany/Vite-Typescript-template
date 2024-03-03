@@ -3,12 +3,12 @@ on:
   # Runs against all pushes
   push:
     branches:
-      - "**"
+      - '**'
 
   # Runs against all pull requests
   pull_request:
     branches:
-      - "**"
+      - '**'
 
 jobs:
   ci:
@@ -28,7 +28,8 @@ jobs:
         with:
           node-version: 16.x
           # Sets up pnpm's cache
-          cache: "pnpm"
+          cache: 'pnpm'
+          pnpm-version: 8
 
       # Install with frozen lockfile to ensure packages
       # are not accidentally updated
