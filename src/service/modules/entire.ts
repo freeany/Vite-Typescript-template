@@ -23,11 +23,11 @@ myRequest2
 	.request<IHighScoreData>({
 		url: '/home/highscore',
 		interceptors: {
-			requestSuccessFn: config => {
+			requestInterceptor: config => {
 				console.log('/home/highscore请求成功的拦截')
 				return config
 			},
-			responseSuccessFn: res => {
+			responseInterceptor: res => {
 				console.log('/home/highscore响应成功的拦截')
 				return res
 			}

@@ -1,10 +1,10 @@
-const inventory = [
-	{ name: 'asparagus', type: 'vegetables', quantity: 5 },
-	{ name: 'bananas', type: 'fruit', quantity: 0 },
-	{ name: 'goat', type: 'meat', quantity: 23 },
-	{ name: 'cherries', type: 'fruit', quantity: 5 },
-	{ name: 'fish', type: 'meat', quantity: 22 }
-]
-
-const result = Object
-console.log(result)
+enum Color {
+	Red = '#ff0000',
+	Green = '#00ff00',
+	Blue = '#0000ff'
+}
+function changeTheme(color: Color.Red) {
+	this.theme = color
+}
+changeTheme('Red') // error
+changeTheme(Color.Red) // error

@@ -1,13 +1,18 @@
-import type { AxiosResponse, AxiosRequestConfig } from 'axios'
+import type { AxiosRequestConfig, AxiosResponse, InternalAxiosRequestConfig } from 'axios'
 
+export interface Result<T> {
+	data: T
+	retCode: number
+	errMsg?: string
+}
 // 针对AxiosRequestConfig配置进行扩展
-export interface MyInterceptors<T = AxiosResponse> {
-	requestSuccessFn?: (config: AxiosRequestConfig) => AxiosRequestConfig
-	requestFailureFn?: (err: any) => any
-	responseSuccessFn?: (res: T) => T
-	responseFailureFn?: (err: any) => any
+export interface Interceptors<T = InternalAxiosRequestConfig, U = any> {
+	requestInterceptor?: (config: T) => T
+	requestInterceptorCatch?: (err: any) => any
+	responseInterceptor?: (res: AxiosResponse<Result<U>>) => AxiosResponse<Result<U>>
+	responseInterceptorCatch?: (err: any) => any
 }
 
-export interface MyRequestConfig<T = AxiosResponse> extends AxiosRequestConfig {
-	interceptors?: MyInterceptors<T>
+export interface CreateRequestConfig<T = InternalAxiosRequestConfig, U = any> extends AxiosRequestConfig {
+	interceptors?: Interceptors<T, U>
 }

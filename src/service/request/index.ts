@@ -1,11 +1,9 @@
 import axios from 'axios'
-import type { AxiosInstance } from 'axios'
-import type { MyRequestConfig } from './type'
+import type { AxiosInstance, AxiosRequestConfig } from 'axios'
+import type { CreateRequestConfig, Result } from './type'
 
 // 拦截器: 蒙版Loading/token/修改配置
-function getToken() {
-	return '123'
-}
+
 /**
  * 两个难点:
  *  1.拦截器进行精细控制
@@ -16,11 +14,12 @@ function getToken() {
  *  2.响应结果的类型处理(泛型)
  */
 
-class MyRequest {
-	instance: AxiosInstance
-
-	constructor(config: MyRequestConfig) {
+class Http {
+	private instance: AxiosInstance
+	private options: CreateRequestConfig
+	constructor(config: CreateRequestConfig) {
 		this.instance = axios.create(config)
+		this.options = config
 		// 每个instance实例都添加拦截器
 		this.instance.interceptors.request.use(
 			config => {
@@ -28,10 +27,10 @@ class MyRequest {
 				/**
 				 * set your config
 				 */
-				if (import.meta.env.VITE_APP_TOKEN_KEY && getToken()) {
-					// carry token
-					config.headers[import.meta.env.VITE_APP_TOKEN_KEY] = getToken()
-				}
+				// if (import.meta.env.VITE_APP_TOKEN_KEY && getToken()) {
+				// 	// carry token
+				// 	config.headers[import.meta.env.VITE_APP_TOKEN_KEY] = getToken()
+				// }
 				return config
 			},
 			err => {
@@ -49,23 +48,33 @@ class MyRequest {
 				return err
 			}
 		)
+		this.setInterceptors()
 	}
-
+	// 每个请求传递的拦截器
+	setInterceptors() {
+		const { interceptors } = this.options
+		if (!interceptors) {
+			return
+		}
+		const { requestInterceptor, requestInterceptorCatch, responseInterceptor, responseInterceptorCatch } = interceptors
+		this.instance.interceptors.request.use(requestInterceptor, requestInterceptorCatch)
+		this.instance.interceptors.response.use(responseInterceptor, responseInterceptorCatch)
+	}
 	// 封装网络请求的方法
-	request<T = any>(config: MyRequestConfig<T>) {
+	request<T = any>(config: CreateRequestConfig<AxiosRequestConfig, T>) {
 		// url级别的成功拦截处理
-		if (config.interceptors?.requestSuccessFn) {
-			config = config.interceptors.requestSuccessFn(config)
+		if (config.interceptors?.requestInterceptor) {
+			config = config.interceptors.requestInterceptor(config)
 		}
 
 		// 返回Promise
-		return new Promise<T>((resolve, reject) => {
+		return new Promise<Result<T>>((resolve, reject) => {
 			this.instance
-				.request<any, T>(config)
+				.request<any, Result<T>>(config)
 				.then(res => {
 					// url级别的响应的成功拦截处理
-					if (config.interceptors?.responseSuccessFn) {
-						res = config.interceptors.responseSuccessFn(res)
+					if (config.interceptors?.responseInterceptor) {
+						res = config.interceptors?.responseInterceptor(res)
 					}
 					resolve(res)
 				})
@@ -75,18 +84,18 @@ class MyRequest {
 		})
 	}
 
-	get<T = any>(config: MyRequestConfig<T>) {
+	get<T = any>(config: AxiosRequestConfig<T>) {
 		return this.request({ ...config, method: 'GET' })
 	}
-	post<T = any>(config: MyRequestConfig<T>) {
+	post<T = any>(config: AxiosRequestConfig<T>) {
 		return this.request({ ...config, method: 'POST' })
 	}
-	delete<T = any>(config: MyRequestConfig<T>) {
+	delete<T = any>(config: AxiosRequestConfig<T>) {
 		return this.request({ ...config, method: 'DELETE' })
 	}
-	patch<T = any>(config: MyRequestConfig<T>) {
+	patch<T = any>(config: AxiosRequestConfig<T>) {
 		return this.request({ ...config, method: 'PATCH' })
 	}
 }
 
-export default MyRequest
+export default Http

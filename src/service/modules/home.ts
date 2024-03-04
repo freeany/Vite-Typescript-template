@@ -1,15 +1,17 @@
-import hyRequest from "..";
+import Http from '..'
 
 // 发送网络请求
-// hyRequest.post
 interface IHomeData {
-  data: any,
-  returnCode: string,
-  success: boolean
+	data: any
+	returnCode: string
+	success: boolean
 }
 
-hyRequest.request<IHomeData>({
-  url: "/home/multidata"
-}).then(res => {
-  console.log(res.data, res.success, res.returnCode)
-})
+export function getHomeData() {
+	return Http.request<IHomeData>({
+		url: '/home/multidata'
+	}).then(res => {
+		// console.log(res.data, res.success, res.returnCode)
+		return res
+	})
+}
