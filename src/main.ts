@@ -23,4 +23,4 @@ document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
 
 // let num: string = 123
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+setupCounter()
