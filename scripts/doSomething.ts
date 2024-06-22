@@ -1,35 +1,53 @@
-class Parent {
-  rich100() {
-    return 100
+export const setupCounter = () => {
+  function Enum(isEnum: boolean): MethodDecorator {
+    return function (target, propertyKey, descriptor) {
+      console.log('target: ', target)
+      console.log('propertyKey: ', propertyKey)
+      console.log('descriptor: ', descriptor)
+      descriptor.enumerable = isEnum
+    }
   }
+
+  function ToUpper(isToUpper: boolean): PropertyDecorator {
+    return function (target, propertyKey) {
+      console.log('target', target) // 类的原型对象
+      console.log('propertyKey', propertyKey) // 修饰的属性名称
+    }
+  }
+
+  function valToUpper(isToUpper: boolean) {
+    return (target: Object, propertyKey: string, descriptor: TypedPropertyDescriptor<string>) => {
+      console.log('target: ', target)
+      console.log('propertyKey: ', propertyKey)
+      console.log('descriptor: ', descriptor)
+
+      if (!isToUpper) return
+      const originalGet = descriptor.get!
+
+      descriptor.get = function () {
+        return originalGet.call(this).toUpperCase()
+      }
+    }
+  }
+  class Animal {
+    public name: string = 'aa'
+    private _val = 'abc'
+    // @Enum(true)
+    eat() {
+      console.log('anmial eat 方法')
+    }
+
+    @valToUpper(true)
+    get val() {
+      return this._val
+    }
+    set val(newVal: string) {
+      this._val = newVal
+    }
+  }
+
+  const animal = new Animal()
+  console.log(animal.val)
 }
 
-class Child extends Parent {
-  rich1000() {
-    return 1000
-  }
-}
-
-class GrandSon extends Child {
-  rich10000() {
-    return 10000
-  }
-}
-
-// 在声明接口类型时，我们在接口中定义一个方法
-// interface MyArray<T> {
-//   // 原型方法
-//   // concat(...args: T[]): void // 不会开启逆变和协变，不会对参数进行逆变检测
-//   // 实例方法
-//   concat: (...args: T[]) => void // 会开启逆变和协变
-// }
-
-// declare let arr1: MyArray<Parent>
-// declare let arr2: MyArray<Child>
-
-// arr1 = arr2
-
-let nibian: (instance: Child) => void = (instance: ParentGrandSon) => void 0
-let xiebian: (instance: Child) => Child = (instance: Child) => new GrandSon()
-
-export {}
+setupCounter()
