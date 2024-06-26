@@ -56,6 +56,10 @@ Arcgis（基本上都会）提供了javascript的api，javascript可以直接获
 
 
 
+![image-20240623175728239](/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623175728239.png)
+
+
+
 #### webgis
 
 ##### 1、webgis
@@ -68,7 +72,7 @@ Arcgis（基本上都会）提供了javascript的api，javascript可以直接获
 
 ![image-20240615155619898](https://gitee.com/freeanyli/picture/raw/master/image-20240615155619898.png)
 
-![image-20240615155628165](https://gitee.com/freeanyli/picture/raw/master/image-20240615155628165.png)
+![z](https://gitee.com/freeanyli/picture/raw/master/image-20240615155628165.png)
 
 ##### 3、开源三维可视化平台
 
@@ -122,7 +126,7 @@ Arcgis（基本上都会）提供了javascript的api，javascript可以直接获
 
 点： 地标识别成一个点
 
-<img src="https://gitee.com/freeanyli/picture/raw/master/image-20240615193956387.png" alt="image-20240615193956387" style="zoom:50%;" />
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172010419.png" alt="image-20240623172010419" style="zoom:50%;" />
 
 线：
 
@@ -138,11 +142,15 @@ Arcgis（基本上都会）提供了javascript的api，javascript可以直接获
 
 ##### 2、 从数据类型来说
 
-1. 矢量数据---放大之后不会失真。 
+矢量数据- 放大之后不会失真
 
-2. 栅格数据---卫星-由一个个像素点组成，放大后会失真
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172352307.png" alt="image-20240623172352307" style="zoom:50%;" />
 
-<img src="https://gitee.com/freeanyli/picture/raw/master/image-20240615194545014.png" alt="image-20240615194545014" style="zoom:20%;" />
+栅格数据(卫星影像数据) - 放大之后会失真。一个一个像素拼接组成。
+
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172411277.png" alt="image-20240623172411277" style="zoom:50%;" />
+
+
 
 ##### 3、从图层来说
 
@@ -155,6 +163,12 @@ Arcgis（基本上都会）提供了javascript的api，javascript可以直接获
 图层同一个类型的事物我们会把她们放到同一个图层上。
 
 一幅地图是由很多图层组成的。一张电子地图是由很多图层堆叠而成的。
+
+
+
+
+
+WGS84 经度和纬度范围分别为**-180°至180°和-90°至90°**。
 
 
 
@@ -356,3 +370,40 @@ GIS地图数据是由不同图层构成，各图层内的数据可以分为矢�
 
 ![image-20240622134747295](https://gitee.com/freeanyli/picture/raw/master/image-20240622134747295.png)
 
+
+
+
+
+
+
+
+
+## 地图由什么组成
+
+1. 数据表现来说
+
+   点、线、面组成
+
+点：地标识别成一个点
+
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172010419.png" alt="image-20240623172010419" style="zoom:50%;" />
+
+区/面
+
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172103686.png" alt="image-20240623172103686" style="zoom:50%;" />
+
+线
+
+地铁/高铁/火车/公路
+
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172221511.png" alt="image-20240623172221511" style="zoom:50%;" />
+
+从数据类型来说
+
+矢量数据- 放大之后不会失真
+
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172352307.png" alt="image-20240623172352307" style="zoom:50%;" />
+
+栅格数据(卫星影像数据) - 放大之后会失真。一个一个像素拼接组成。
+
+<img src="/Users/lihaoran/Library/Application%20Support/typora-user-images/image-20240623172411277.png" alt="image-20240623172411277" style="zoom:50%;" />
